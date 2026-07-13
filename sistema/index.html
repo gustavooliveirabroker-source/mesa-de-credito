@@ -319,6 +319,85 @@ table.t td.co b{font-weight:600} table.t td.co small{display:block;font-size:11p
 .divider{height:1px;background:var(--border);margin:16px 0}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+/* ===== tabs ===== */
+.tabhost{margin-top:2px}
+.tabbar{display:flex;gap:4px;overflow-x:auto;border:1px solid var(--border);background:var(--surface-strong);border-radius:14px;padding:4px;margin-bottom:16px;backdrop-filter:blur(12px)}
+.tab{flex:none;padding:8px 14px;border-radius:10px;font-size:12.5px;font-weight:600;color:var(--muted-foreground);white-space:nowrap;transition:var(--tsmooth)}
+.tab:hover{color:var(--foreground)}
+.tab.active{background:var(--card);color:var(--emerald);box-shadow:var(--shadow-soft)}
+.dark .tab.active{color:var(--neon);background:rgba(255,255,255,.06)}
+.tabpane{display:none;animation:rise .3s ease both}
+.tabpane.active{display:block}
+
+/* ===== score gauge ===== */
+.gauge{position:relative;width:118px;height:118px;flex:none}
+.gauge .ring{width:118px;height:118px;border-radius:50%;background:conic-gradient(var(--gcol,var(--emerald)) calc(var(--gp,74)*1%),var(--muted) 0)}
+.gauge .hole{position:absolute;inset:11px;border-radius:50%;background:var(--card);display:grid;place-items:center;text-align:center;box-shadow:var(--shadow-soft)}
+.dark .gauge .hole{background:var(--forest)}
+.gauge .hole b{font-size:26px;font-family:'IBM Plex Mono';line-height:1}
+.gauge .hole small{font-size:9px;color:var(--muted-foreground);text-transform:uppercase;letter-spacing:.1em}
+
+/* ===== strip ===== */
+.strip{display:flex;gap:16px;flex-wrap:wrap;align-items:center;padding:18px 20px;border-radius:18px}
+.strip .sv{flex:1;min-width:120px}
+.strip .sv .n{font-size:20px;font-weight:700;margin-top:3px;font-family:'IBM Plex Mono'}
+
+/* ===== docs ===== */
+.doc{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--border)}
+.doc:first-of-type{border:none}
+.doc .di{width:36px;height:36px;border-radius:9px;background:var(--muted);display:grid;place-items:center;flex:none;color:var(--emerald)}
+.dark .doc .di{color:var(--mint)}
+.doc .di svg{width:17px;height:17px}
+.doc .dc{flex:1}.doc .dc b{font-size:13px}.doc .dc small{display:block;font-size:11px;color:var(--muted-foreground);font-family:'IBM Plex Mono'}
+
+/* ===== consulta rich cards ===== */
+.cq{display:grid;gap:12px;grid-template-columns:1fr}@media(min-width:720px){.cq{grid-template-columns:1fr 1fr}}
+.cqc{border:1px solid var(--border);border-radius:14px;padding:16px;background:var(--card)}
+.cqc .cqh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.cqc .cqi{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none}
+.cqc .cqi svg{width:16px;height:16px}
+.cqc .cqt{font-size:13.5px;font-weight:700} .cqc .cqt small{display:block;font-weight:400;font-size:11px;color:var(--muted-foreground)}
+.cqrow{display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-top:1px dashed var(--border)}
+.cqrow b{font-family:'IBM Plex Mono';font-weight:600}
+
+/* ===== trend card ===== */
+.tc{border:1px solid var(--border);border-radius:12px;padding:13px;background:var(--card)}
+.tc .v{font-size:18px;font-weight:700;margin-top:4px;font-family:'IBM Plex Mono'}
+.tc .t{font-size:11px;font-weight:600;margin-top:2px;display:inline-flex;align-items:center;gap:3px}
+.tc .t svg{width:12px;height:12px}
+
+/* ===== timeline ===== */
+.tl{position:relative;padding-left:22px}
+.tl::before{content:"";position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.tli{position:relative;padding:0 0 16px}
+.tli:last-child{padding-bottom:0}
+.tli::before{content:"";position:absolute;left:-21px;top:3px;width:11px;height:11px;border-radius:50%;background:var(--emerald);box-shadow:0 0 0 3px var(--card)}
+.dark .tli::before{background:var(--neon);box-shadow:0 0 0 3px var(--forest)}
+.tli.bad::before{background:var(--destructive)}
+
+/* ===== modal ===== */
+.modal-scrim{position:fixed;inset:0;background:rgba(6,35,29,.55);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-scrim.show{display:flex}
+.modal{width:100%;max-width:560px;max-height:86vh;overflow-y:auto;border-radius:20px;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow-elegant);animation:rise .3s ease both}
+.dark .modal{background:#0a2722}
+.modal .mh{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:inherit;z-index:1}
+.modal .mh h3{font-size:16px}.modal .mb{padding:20px}
+.mclose{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;border:1px solid var(--border)}
+.mclose svg{width:16px;height:16px}
+
+/* ===== vote detail ===== */
+.vopt.sel{border-color:var(--emerald);background:rgba(7,102,83,.08);color:var(--emerald)}
+.dark .vopt.sel{border-color:var(--neon);color:var(--neon)}
+.vdetail{border:1px solid var(--emerald);border-radius:12px;padding:14px;margin-top:14px;background:rgba(7,102,83,.04);display:none}
+.dark .vdetail{border-color:rgba(226,251,206,.3)}
+.vdetail.show{display:block}
+.txta{width:100%;border:1px solid var(--input);background:var(--card);border-radius:10px;padding:10px;font-family:inherit;font-size:13px;color:inherit;resize:vertical;min-height:64px;outline:none}
+.txta:focus{border-color:var(--emerald)}
+
+input[type=range]{accent-color:var(--emerald);height:6px;cursor:pointer}
+.dark input[type=range]{accent-color:var(--neon)}
+.dark .dark-mint{color:var(--mint)!important}
+
 /* drawer mobile */
 .scrim{position:fixed;inset:0;background:rgba(6,35,29,.6);backdrop-filter:blur(4px);z-index:40;display:none}
 .scrim.show{display:block}
@@ -358,6 +437,9 @@ table.t td.co b{font-weight:600} table.t td.co small{display:block;font-size:11p
   </main>
 </div>
 <div class="scrim" id="scrim" onclick="toggleDrawer(false)"></div>
+<div class="modal-scrim" id="modalScrim" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><div class="mh"><h3 id="modalTitle">—</h3><button class="mclose" onclick="closeModal()" data-ic="x"></button></div><div class="mb" id="modalBody"></div></div>
+</div>
 
 <script>
 /* ===== lucide-style icons (stroke) ===== */
@@ -398,7 +480,13 @@ const P={
  dollar:'<line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
  briefcase:'<rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
- percent:'<line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>'
+ percent:'<line x1="19" x2="5" y1="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',
+ calc:'<rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><path d="M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/>',
+ eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+ info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+ download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+ idCard:'<rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/>',
+ activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'
 };
 function svg(n,cls){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ${cls?`class="${cls}"`:''}>${P[n]||''}</svg>`}
 document.querySelectorAll('[data-ic]').forEach(e=>e.insertAdjacentHTML('afterbegin',svg(e.dataset.ic)));
@@ -408,6 +496,7 @@ const NAV=[
  {sec:'Principal'},
  {id:'visao',ic:'dashboard',t:'Visão Geral'},
  {id:'nova',ic:'filePlus',t:'Nova Proposta'},
+ {id:'simulador',ic:'calc',t:'Simulador'},
  {id:'kanban',ic:'kanban',t:'Kanban'},
  {sec:'Análise'},
  {id:'analises',ic:'list',t:'Análises',cnt:'14'},
@@ -663,7 +752,7 @@ S.clientes=()=>`
   ${clRow('Frigorífico Serra Azul','77.888.999/0001-11','Alimentos','1.200.000','Y','s-ok','Ativo')}
   ${clRow('Construtora Alvorada','55.666.777/0001-88','Construção','890.000','Z','s-ok','Ativo')}
 </tbody></table></div>`;
-function clRow(en,cn,seg,exp,rk,sc,st){return `<tr style="cursor:pointer" data-go="detalhe"><td class="co"><b>${en}</b><small>${cn}</small></td><td class="m-hide">${seg}</td><td class="mono-v">R$ ${exp}</td><td>${riskBadge(rk)}</td><td><span class="pill ${sc}">${st}</span></td></tr>`}
+function clRow(en,cn,seg,exp,rk,sc,st){return `<tr style="cursor:pointer" data-go="clientePerfil"><td class="co"><b>${en}</b><small>${cn}</small></td><td class="m-hide">${seg}</td><td class="mono-v">R$ ${exp}</td><td>${riskBadge(rk)}</td><td><span class="pill ${sc}">${st}</span></td></tr>`}
 
 /* ---- GRUPOS ECONÔMICOS ---- */
 S.grupos=()=>`
@@ -925,14 +1014,245 @@ S.config=()=>`
 </div>`;
 function pref(t,d,on){return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--border)"><div><b style="font-size:13px">${t}</b><div class="sub" style="font-size:11.5px">${d}</div></div><span style="width:38px;height:22px;border-radius:99px;background:${on?'var(--emerald)':'var(--muted)'};position:relative;flex:none"><span style="position:absolute;width:18px;height:18px;border-radius:99px;background:#fff;top:2px;${on?'right:2px':'left:2px'};box-shadow:0 1px 3px rgba(0,0,0,.2)"></span></span></div>`}
 
+/* ===== FASE 1 · modais, abas, gauge, simulador, histórico ===== */
+function tab(btn,name){const h=btn.closest('.tabhost');h.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===btn));h.querySelectorAll('.tabpane').forEach(p=>p.classList.toggle('active',p.dataset.pane===name));window.scrollTo({top:0,behavior:'smooth'})}
+function gaugeEl(score,band){const p=(score/1000*100).toFixed(0);const col=band==='Z'?'var(--destructive)':band==='Y'?'#d9983c':'var(--emerald)';return `<div class="gauge" style="--gp:${p};--gcol:${col}"><div class="ring"></div><div class="hole"><div><b>${score}</b><small>score</small></div></div></div>`}
+function qrow(l,v){return `<div class="cqrow"><span class="muted">${l}</span><b>${v}</b></div>`}
+function cqCard(ic,ci,t,sub,sc,st,rows){return `<div class="cqc"><div class="cqh"><span class="cqi ${ci}">${svg(ic)}</span><div class="cqt">${t}<small>${sub}</small></div><span class="pill ${sc}" style="margin-left:auto">${st}</span></div>${rows.map(r=>qrow(r[0],r[1])).join('')}</div>`}
+function docRow(ic,t,meta,sc,st){return `<div class="doc"><span class="di">${svg(ic)}</span><div class="dc"><b>${t}</b><small>${meta}</small></div><span class="pill ${sc}">${st}</span><button class="btn-outline" style="padding:5px 10px" onclick="openModal('${t}','Pré-visualização do documento no protótipo.')">${svg('eye')} Ver</button></div>`}
+function trendCard(l,v,dir,d){const c=dir==='up'?'var(--emerald)':dir==='down'?'var(--destructive)':'var(--muted-foreground)';return `<div class="tc"><div class="eyebrow" style="font-size:9px">${l}</div><div class="v">${v}</div><div class="t" style="color:${c}">${dir!=='flat'?svg(dir):''}${d}</div></div>`}
+function tli(t,m,cls){return `<div class="tli ${cls==='bad'?'bad':''}"><b style="font-size:13px">${t}</b><div class="sub" style="font-size:11.5px">${m}</div></div>`}
+function tlp(d,p,dec,sc,rk){return `<div class="tli" style="cursor:pointer" data-go="detalhe"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b style="font-size:13px">${p}</b>${riskBadge(rk)}</div><div class="sub" style="font-size:11.5px;margin-top:2px">${d}</div><span class="pill ${sc}" style="margin-top:6px">${dec}</span></div>`}
+function exRow(d,x,c){return `<tr><td class="co"><b>${d}</b></td><td style="font-size:12.5px">${x}</td><td class="tright"><span class="pill ${c>=95?'s-ok':c>=90?'s-info':'s-warn'}">${c}%</span></td></tr>`}
+
+function openModal(title,body){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modalScrim').classList.add('show')}
+function closeModal(){document.getElementById('modalScrim').classList.remove('show')}
+function explainWhy(){const fac=[['Score proprietário 742','+',72,'var(--emerald)'],['Receita estável há 8 anos','+',64,'var(--emerald)'],['Margem líquida 8,4%','+',48,'var(--emerald)'],['Comprometimento 34%','−',40,'#d9983c'],['Processo trabalhista R$ 18k','−',30,'#d9983c'],['Exposição do grupo elevada','−',52,'var(--destructive)']];const body=`<p class="sub" style="margin-bottom:14px">A recomendação combina fatores favoráveis e de risco, ponderados pelo motor. O titular tem direito a solicitar revisão humana (LGPD art. 20).</p>`+fac.map(f=>`<div style="margin:10px 0"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span><b style="color:${f[3]}">${f[1]}</b> ${f[0]}</span><span class="mono">${f[2]}%</span></div><div class="bar"><span style="width:${f[2]}%;background:${f[3]}"></span></div></div>`).join('')+`<div style="margin-top:16px;padding:12px;background:var(--muted);border-radius:10px;font-size:12.5px"><b>Resultado:</b> aprovação com condições · recomendado R$ 90.000 · faixa Y · alçada N1+N2.</div><div style="display:flex;gap:8px;margin-top:14px"><button class="btn-neon" onclick="closeModal()">Entendi</button><button class="btn-outline">Solicitar revisão humana</button></div>`;openModal('Por que essa recomendação?',body)}
+function voteSelect(el,label){const host=el.closest('.tabpane');host.querySelectorAll('.vopt').forEach(v=>v.classList.remove('sel'));el.classList.add('sel');host.querySelector('#vdetail').classList.add('show');host.querySelector('#vlabel').textContent=label}
+function voteConfirm(){openModal('Voto registrado',`<div style="text-align:center;padding:10px"><div style="width:56px;height:56px;border-radius:99px;background:rgba(7,102,83,.14);color:var(--emerald);display:grid;place-items:center;margin:0 auto 12px">${svg('check')}</div><b style="font-size:15px">Seu voto foi registrado</b><p class="sub" style="margin-top:6px">A decisão do comitê será consolidada ao atingir o quórum (2/2). Voto e justificativa ficam no histórico imutável.</p><button class="btn-neon" style="margin-top:16px" onclick="closeModal()">Fechar</button></div>`)}
+function brl(n){return 'R$ '+Math.round(n).toLocaleString('pt-BR')}
+function setEl(id,html){const e=document.getElementById(id);if(e)e.innerHTML=html}
+function simCalc(){const V=document.getElementById('sim_valor');if(!V)return;const v=+V.value,pr=+document.getElementById('sim_prazo').value,ent=+document.getElementById('sim_entrada').value;const fin=v*(1-ent/100);const band=(ent>=30&&fin<100000)?'X':(fin<300000?'Y':'Z');const taxa=band==='X'?1.8:band==='Y'?2.4:3.2;const parcela=fin/pr*(1+taxa/100*(pr+1)/2);const limite=band==='X'?150000:band==='Y'?300000:500000;const comp=Math.min(100,parcela/(v*0.06)*34);setEl('sim_valor_l',brl(v));setEl('sim_prazo_l',pr+' meses');setEl('sim_entrada_l',ent+'%');setEl('sim_fin',brl(fin));setEl('sim_faixa',riskBadge(band));setEl('sim_taxa',taxa.toFixed(1).replace('.',',')+'% a.m.');setEl('sim_parcela',brl(parcela));setEl('sim_limite',brl(limite));setEl('sim_comp',comp.toFixed(0)+'%');const b=document.getElementById('sim_bar');if(b)b.style.width=comp.toFixed(0)+'%'}
+
+/* ---- DETALHE (reconstruído com abas) ---- */
+S.detalhe=()=>`
+<div class="page-h">
+  <div><div class="eyebrow">${svg('fileText')} Proposta #2026-0481 · aberta 13/07</div><h2>Transportadora Vale Verde LTDA</h2><p class="sub mono">12.345.678/0001-90 · CNAE 4930-2/02 · Financiamento de frota (2 caminhões)</p></div>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn-outline" onclick="explainWhy()">${svg('info')} Por que essa decisão?</button><button class="btn-neon">${svg('download')} Baixar parecer</button></div>
+</div>
+<div class="glass-strong strip" style="margin-bottom:16px">
+  ${gaugeEl(742,'Y')}
+  <div class="sv"><div class="eyebrow">Faixa de risco</div><div style="margin-top:6px">${riskBadge('Y')}</div><div class="sub" style="font-size:11px;margin-top:6px">Score proprietário · classe B+</div></div>
+  <div class="sv"><div class="eyebrow">Taxa (risk-based)</div><div class="n" style="color:var(--emerald)">2,4%<small style="font-size:12px;color:var(--muted-foreground)"> a.m.</small></div><div class="sub" style="font-size:11px">CET 32,9% a.a.</div></div>
+  <div class="sv"><div class="eyebrow">Exposição total</div><div class="n">R$ 360k</div><div class="sub" style="font-size:11px">grupo R$ 1,18M</div></div>
+  <div class="sv"><div class="eyebrow">Recomendado</div><div class="n" style="color:var(--emerald)">R$ 90k</div><div class="sub" style="font-size:11px">solicitado R$ 150k</div></div>
+</div>
+<div class="tabhost">
+  <div class="tabbar">
+    <button class="tab active" onclick="tab(this,'resumo')">Resumo</button>
+    <button class="tab" onclick="tab(this,'docs')">Documentos</button>
+    <button class="tab" onclick="tab(this,'cons')">Consultas</button>
+    <button class="tab" onclick="tab(this,'ia')">Análise IA</button>
+    <button class="tab" onclick="tab(this,'grupo')">Grupo Econômico</button>
+    <button class="tab" onclick="tab(this,'reco')">Recomendação</button>
+    <button class="tab" onclick="tab(this,'comite')">Comitê</button>
+  </div>
+
+  <div class="tabpane active" data-pane="resumo">
+    <div class="grid c2">
+      <div class="glass panel">
+        <div class="panel-h"><h3>Resumo da operação</h3></div>
+        <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:10px">${mini('Valor','R$ 150.000')}${mini('Prazo','12 meses')}${mini('Parcela','R$ 10.000')}${mini('Entrada','R$ 30k (20%)')}${mini('Garantia','Alienação')}${mini('Avalista','1 · João M.')}</div>
+        <div class="divider"></div>
+        <div class="panel-h"><h3 style="font-size:14px">Exposição</h3></div>
+        ${expRow('Atual do cliente','R$ 240.000')}${expRow('Nova solicitada','R$ 120.000')}${expRow('Total após aprovação','R$ 360.000',true)}${expRow('Grupo econômico','R$ 1.180.000')}${expRow('Limite recomendado','R$ 300.000','em')}
+      </div>
+      <div class="glass panel">
+        <div class="panel-h"><h3>Andamento</h3></div>
+        <div class="tl">${tli('Proposta criada','Marina Reis · 13/07 08:12')}${tli('Documentos recebidos','6 documentos · 13/07 09:05')}${tli('Consultas concluídas','3/4 OK, 1 alerta · 13/07 10:40')}${tli('Análise financeira (IA)','Parecer gerado · 13/07 11:02')}${tli('Em comitê','Aguardando voto N2 · agora')}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabpane" data-pane="docs">
+    <div class="glass panel">
+      <div class="panel-h"><h3>Documentação do cliente</h3><span class="pill s-ok">6 de 6 recebidos</span></div>
+      ${docRow('idCard','Cartão CNPJ','PDF · 220 KB · 13/07','s-ok','Validado')}
+      ${docRow('fileText','Contrato social','PDF · 1,2 MB · 13/07','s-ok','Validado')}
+      ${docRow('idCard','CNH do sócio · João P. Menezes','PDF · 480 KB · 13/07','s-ok','Validado')}
+      ${docRow('chart','DRE 2025','PDF · 340 KB · 13/07','s-ok','Lido pela IA')}
+      ${docRow('bank','Balanço patrimonial 2025','PDF · 510 KB · 13/07','s-ok','Lido pela IA')}
+      ${docRow('activity','Extratos bancários (6 meses)','PDF · 2,1 MB · 13/07','s-warn','Em conferência')}
+    </div>
+  </div>
+
+  <div class="tabpane" data-pane="cons">
+    <div class="cq">
+      ${cqCard('building','ci-ok','Cadastral CPF/CNPJ','base cadastral','s-ok','ATIVA',[['Situação','ATIVA'],['Abertura','2018 · 8 anos'],['Capital social','R$ 500.000'],['Porte','EPP']])}
+      ${cqCard('chart','ci-ok','Score & Cadastro Positivo','baixa inadimplência','s-ok','742',[['Score','742 / 1000'],['Classe','B+'],['Consultas 90d','3'],['Cadastro Positivo','Aderente']])}
+      ${cqCard('alert','ci-warn','Processos & Protestos','1 ocorrência','s-warn','Alerta',[['Processos','1 trabalhista'],['Valor','R$ 18.000'],['Situação','Em andamento'],['Protestos','Nenhum']])}
+      ${cqCard('network','ci-ok','Quadro societário','2 sócios · 3 CNPJs','s-ok','OK',[['Sócios','2'],['Administrador','João P. Menezes'],['CNPJs vinculados','3'],['Restrição no grupo','1 · R$ 12k']])}
+    </div>
+  </div>
+
+  <div class="tabpane" data-pane="ia">
+    <div class="glass panel" style="margin-bottom:14px">
+      <div class="panel-h"><h3>Parecer do agente financeiro</h3><span class="pill s-viol">${svg('sparkles')} IA + motor determinístico</span></div>
+      <p class="sub" style="font-size:13.5px;line-height:1.65">A empresa apresenta <b>receita estável de R$ 3,4M/ano</b>, crescimento de 12% no período e margem líquida de 8,4%. O endividamento (Dívida/EBITDA 2,1x) é administrável, porém o <b>comprometimento de caixa (34%)</b> e a <b>exposição consolidada do grupo (R$ 1,18M)</b> pedem cautela. Recomenda-se aprovação parcial com entrada e avalista.</p>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+      <div class="glass panel"><div class="panel-h"><h3 style="font-size:14px">Faturamento · 12 meses</h3><span class="pill s-ok">${svg('up')} +12%</span></div><div class="chart" style="height:96px">${[52,48,60,55,63,58,70,66,61,74,69,80].map((h,i)=>`<div class="b ${i==11?'hl':''}" style="height:${h}%"></div>`).join('')}</div><div class="axis"><span>ago/25</span><span>jul/26</span></div></div>
+      <div class="glass panel"><div class="panel-h"><h3 style="font-size:14px">Composição do endividamento</h3></div><div class="chart" style="height:96px">${[72,48,30,18].map(h=>`<div class="b" style="height:${h}%"></div>`).join('')}</div><div class="axis"><span>Bancos</span><span>Fornec.</span><span>Trib.</span><span>Outros</span></div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">${trendCard('Margem líquida','8,4%','up','+0,6pp')}${trendCard('Dívida/EBITDA','2,1x','down','melhor que 2,6x')}${trendCard('Liquidez corrente','1,3','up','saudável')}${trendCard('Comprometim. 12m','34%','flat','no teto')}${trendCard('Capital de giro','R$ 420k','up','positivo')}${trendCard('Dias saldo negativo','4','down','em 180d')}</div>
+    <div class="glass panel">
+      <div class="panel-h"><h3 style="font-size:14px">Dados extraídos dos documentos</h3><span class="eyebrow">confiança da leitura</span></div>
+      <div class="tbl-wrap"><table class="t"><thead><tr><th>Documento</th><th>Dado lido pela IA</th><th class="tright">Confiança</th></tr></thead><tbody>${exRow('DRE 2025','Receita R$ 3,42M · lucro líq. R$ 287k',98)}${exRow('Balanço 2025','Dívida total R$ 1,21M · ativo circ. R$ 640k',95)}${exRow('Extratos 6m','Saldo médio R$ 182k · 4 dias negativos',91)}${exRow('Contrato social','Capital R$ 500k · 2 sócios',99)}</tbody></table></div>
+    </div>
+    <div class="grid c2" style="margin-top:14px">
+      <div class="glass panel"><div class="eyebrow" style="color:var(--emerald)">Pontos fortes</div><div class="flist" style="margin-top:6px"><div><span class="dot-ok"></span><div>Receita estável e crescente (8 anos de atividade)</div></div><div><span class="dot-ok"></span><div>Margem positiva e capital de giro saudável</div></div><div><span class="dot-ok"></span><div>Sem protestos · score alto (742)</div></div></div></div>
+      <div class="glass panel"><div class="eyebrow" style="color:var(--destructive)">Riscos</div><div class="flist" style="margin-top:6px"><div><span class="dot-bad"></span><div>Comprometimento de caixa no limite (34%)</div></div><div><span class="dot-bad"></span><div>Exposição consolidada do grupo elevada</div></div><div><span class="dot-bad"></span><div>Processo trabalhista em andamento</div></div></div></div>
+    </div>
+    <div style="margin-top:14px"><button class="btn-outline" onclick="explainWhy()">${svg('info')} Por que essa decisão?</button></div>
+  </div>
+
+  <div class="tabpane" data-pane="grupo">
+    <div class="glass panel" style="margin-bottom:14px">
+      <div class="panel-h"><h3>Grupo Vale Verde <span class="pill s-info" style="margin-left:6px">provável</span></h3><span class="eyebrow">5 entidades</span></div>
+      <div class="net">
+        <div class="node center" style="top:50%;left:50%;transform:translate(-50%,-50%)"><b>Transportadora Vale Verde</b><small>12.345.678/0001-90</small></div>
+        <div class="node" style="top:6%;left:8%"><b>Logística VV Filial</b><small>/0002-70</small></div>
+        <div class="node" style="top:8%;right:6%"><b>VV Participações</b><small>21.333.444</small></div>
+        <div class="node" style="bottom:6%;left:6%"><b>João P. Menezes</b><small>sócio · 60%</small></div>
+        <div class="node" style="bottom:8%;right:8%"><b>Auto Diesel Peças</b><small>33.222.111</small></div>
+      </div>
+    </div>
+    <div class="glass-strong strip" style="margin-bottom:14px">
+      <div class="sv"><div class="eyebrow">Faturamento consolidado</div><div class="n">R$ 7,8M</div></div>
+      <div class="sv"><div class="eyebrow">Exposição consolidada</div><div class="n" style="color:var(--destructive)">R$ 1,18M</div></div>
+      <div class="sv"><div class="eyebrow">Dívida consolidada</div><div class="n">R$ 2,40M</div></div>
+      <div class="sv"><div class="eyebrow">Restrições no grupo</div><div class="n">1</div></div>
+    </div>
+    <div class="grid c2">
+      <div class="glass panel"><div class="panel-h"><h3 style="font-size:14px">Faturamento por entidade</h3></div><div class="chart" style="height:90px">${[80,42,20,28].map(h=>`<div class="b" style="height:${h}%"></div>`).join('')}</div><div class="axis"><span>Matriz</span><span>Filial</span><span>Particip.</span><span>Auto Diesel</span></div></div>
+      <div class="glass panel"><div class="panel-h"><h3 style="font-size:14px">Financeiro consolidado</h3><span class="pill s-viol">grupo</span></div><div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">${mini('Dívida/EBITDA grupo','2,6x')}${mini('Margem consolidada','7,1%')}${mini('Exposição/faturam.','15,1%')}${mini('Comprometim. grupo','38%')}</div><p class="sub" style="font-size:12px;margin-top:10px">Como grupo, o comprometimento sobe para 38% (vs 34% individual), reforçando a recomendação de reduzir o valor.</p></div>
+    </div>
+  </div>
+
+  <div class="tabpane" data-pane="reco">
+    <div class="grid c2">
+      <div class="glass panel">
+        <div class="panel-h"><h3>${svg('target')} Recomendação</h3><span class="pill s-warn">Com condições</span></div>
+        <div class="rc"><div class="lb"><span>Solicitado</span><b class="mono">R$ 150k · 12m</b></div><div class="track"><div class="fill fill-req" style="width:100%">R$ 150.000</div></div></div>
+        <div class="rc"><div class="lb"><span style="color:var(--emerald)" class="dark-mint">Recomendado</span><b class="mono">R$ 90k · 6m</b></div><div class="track"><div class="fill fill-rec" style="width:60%">R$ 90.000</div></div></div>
+        <div class="chips" style="margin-top:14px"><span class="chip">Entrada 20%</span><span class="chip">Avalista</span><span class="chip">Prazo 6m</span><span class="chip">Revisão 90d</span><span class="chip">Bloqueio em atraso</span></div>
+      </div>
+      <div class="glass panel">
+        <div class="panel-h"><h3 style="font-size:15px">Precificação por risco</h3><span class="pill s-ok">faixa Y</span></div>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">${mini('Taxa sugerida','2,4% a.m.')}${mini('CET','32,9% a.a.')}${mini('Parcela 90k/6m','R$ 16.100')}${mini('Spread de risco','+0,9pp')}</div>
+        <p class="sub" style="font-size:12px;margin-top:10px">A taxa acompanha a faixa: X 1,8% · Y 2,4% · Z 3,2% a.m. Melhor score/garantia → menor spread.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabpane" data-pane="comite">
+    <div class="glass panel" style="margin-bottom:14px">
+      <div class="panel-h"><h3>${svg('gavel')} Comitê · quórum 2/2</h3><span class="pill s-info">1/2 votos</span></div>
+      <div class="voter"><span class="ini">AL</span><div style="flex:1"><b style="font-size:13px">Ana Lima · N1</b><div class="sub" style="font-size:11.5px">Aprovou com condições · 13/07 14:32</div><div style="font-size:12px;margin-top:5px;padding:8px 10px;background:var(--muted);border-radius:8px">"De acordo com a redução para R$ 90k e prazo de 6 meses. Exigir avalista e revisão em 90 dias."</div></div><span class="pill s-ok">${svg('check')} Aprovou</span></div>
+      <div class="voter"><span class="ini" style="background:var(--muted);color:var(--muted-foreground)">GO</span><div style="flex:1"><b style="font-size:13px">Gustavo O. · N2</b><div class="sub" style="font-size:11.5px">Aguardando seu voto · SLA 6h</div></div><span class="pill s-warn">${svg('clock')} Pendente</span></div>
+    </div>
+    <div class="glass panel">
+      <div class="eyebrow">Seu voto (N2)</div>
+      <div class="vote-opt">
+        <button class="vopt ok" onclick="voteSelect(this,'Aprovar')">${svg('check')} Aprovar</button>
+        <button class="vopt" onclick="voteSelect(this,'Aprovar com condições')">Aprovar c/ condições</button>
+        <button class="vopt" onclick="voteSelect(this,'Reduzir valor')">Reduzir valor</button>
+        <button class="vopt" onclick="voteSelect(this,'Reduzir prazo')">Reduzir prazo</button>
+        <button class="vopt" onclick="voteSelect(this,'Solicitar garantia')">Solicitar garantia</button>
+        <button class="vopt" onclick="voteSelect(this,'Devolver ao analista')">Devolver</button>
+        <button class="vopt bad" onclick="voteSelect(this,'Reprovar')">${svg('x')} Reprovar</button>
+      </div>
+      <div class="vdetail" id="vdetail">
+        <div class="eyebrow">Detalhar voto: <b id="vlabel" style="color:var(--emerald)"></b></div>
+        <div class="frow" style="margin-top:10px"><div class="field" style="margin:0"><label>Valor aprovado</label><input value="R$ 90.000"></div><div class="field" style="margin:0"><label>Prazo aprovado</label><input value="6 meses"></div></div>
+        <div class="field" style="margin:12px 0 8px"><label>Condições</label><div class="chips"><span class="chip">Entrada 20%</span><span class="chip">Avalista</span><span class="chip">Revisão 90d</span><span class="chip">+ condição</span></div></div>
+        <div class="field" style="margin:0"><label>Justificativa do voto</label><textarea class="txta" placeholder="Descreva o racional da sua decisão…"></textarea></div>
+        <div style="display:flex;gap:8px;margin-top:12px"><button class="btn-neon" onclick="voteConfirm()">Registrar voto</button><button class="btn-outline" onclick="document.getElementById('vdetail').classList.remove('show')">Cancelar</button></div>
+      </div>
+      <div style="margin-top:14px;padding:12px;background:var(--muted);border-radius:10px;font-size:12px;display:flex;gap:10px"><span style="color:var(--emerald);flex:none">${svg('info')}</span><div><b>Comitê assíncrono:</b> aprovadores votam por link com SLA. Se o N2 não votar em 6h, escala para N3 automaticamente.</div></div>
+    </div>
+  </div>
+</div>`;
+
+/* ---- SIMULADOR ---- */
+S.simulador=()=>`
+<div class="page-h"><div><div class="eyebrow">${svg('calc')} Pré-análise</div><h2>Simulador de Crédito</h2><p class="sub">Teste valor, prazo e entrada e veja a faixa de risco e a taxa antes de abrir a proposta.</p></div></div>
+<div class="grid c2">
+  <div class="glass panel">
+    <div class="panel-h"><h3>Parâmetros</h3></div>
+    <div class="field"><label>Valor da operação · <b id="sim_valor_l">R$ 150.000</b></label><input id="sim_valor" type="range" min="10000" max="1000000" step="10000" value="150000" oninput="simCalc()" style="width:100%"></div>
+    <div class="field"><label>Prazo · <b id="sim_prazo_l">12 meses</b></label><input id="sim_prazo" type="range" min="3" max="36" step="1" value="12" oninput="simCalc()" style="width:100%"></div>
+    <div class="field"><label>Entrada · <b id="sim_entrada_l">20%</b></label><input id="sim_entrada" type="range" min="0" max="50" step="5" value="20" oninput="simCalc()" style="width:100%"></div>
+    <div style="padding:12px;background:var(--muted);border-radius:10px;font-size:12.5px;margin-top:6px">Valor financiado: <b id="sim_fin" class="mono">R$ 120.000</b></div>
+  </div>
+  <div class="glass panel">
+    <div class="panel-h"><h3>Resultado</h3><span class="eyebrow">estimativa</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><span class="muted">Faixa de risco</span><span id="sim_faixa">${riskBadge('Y')}</span></div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+      <div class="tc"><div class="eyebrow" style="font-size:9px">Limite recomendado</div><div class="v" id="sim_limite">R$ 300.000</div></div>
+      <div class="tc"><div class="eyebrow" style="font-size:9px">Taxa sugerida</div><div class="v" id="sim_taxa" style="color:var(--emerald)">2,4% a.m.</div></div>
+      <div class="tc"><div class="eyebrow" style="font-size:9px">Parcela estimada</div><div class="v" id="sim_parcela">R$ 11.400</div></div>
+      <div class="tc"><div class="eyebrow" style="font-size:9px">Comprometimento</div><div class="v" id="sim_comp">34%</div></div>
+    </div>
+    <div class="bar" style="margin-top:14px"><span id="sim_bar" style="width:34%"></span></div>
+    <button class="btn-neon" style="margin-top:16px" data-go="nova">${svg('arrow')} Abrir proposta com estes parâmetros</button>
+  </div>
+</div>`;
+
+/* ---- HISTÓRICO DO CLIENTE ---- */
+S.clientePerfil=()=>`
+<div class="page-h">
+  <div><div class="eyebrow">${svg('users')} Cliente desde 2019</div><h2>Transportadora Vale Verde LTDA</h2><p class="sub mono">12.345.678/0001-90 · Logística · 3 CNPJs no grupo</p></div>
+  <button class="btn-neon" data-go="nova">${svg('plus')} Nova proposta</button>
+</div>
+<div class="glass-strong strip" style="margin-bottom:16px">
+  ${gaugeEl(742,'Y')}
+  <div class="sv"><div class="eyebrow">Score hoje</div><div class="n" style="color:var(--emerald)">742 <small style="font-size:12px;color:var(--muted-foreground)">B+</small></div><div class="sub" style="font-size:11px;display:flex;align-items:center;gap:3px">${svg('up')} +62 em 12 meses</div></div>
+  <div class="sv"><div class="eyebrow">Exposição atual</div><div class="n">R$ 360k</div></div>
+  <div class="sv"><div class="eyebrow">Propostas históricas</div><div class="n">7</div><div class="sub" style="font-size:11px">5 aprovadas · 1 negada · 1 aberta</div></div>
+  <div class="sv"><div class="eyebrow">Inadimplência</div><div class="n" style="color:var(--emerald)">0%</div><div class="sub" style="font-size:11px">nunca atrasou</div></div>
+</div>
+<div class="grid c2">
+  <div class="glass panel">
+    <div class="panel-h"><h3>Evolução do score</h3><span class="pill s-ok">${svg('up')} tendência de alta</span></div>
+    <div class="chart" style="height:100px">${[66,68,70,71,73,80].map((h,i)=>`<div class="b ${i==5?'hl':''}" style="height:${h}%"></div>`).join('')}</div>
+    <div class="axis"><span>jul/25</span><span>set</span><span>nov</span><span>jan</span><span>abr</span><span>jul/26</span></div>
+    <div class="divider"></div>
+    <div class="panel-h"><h3 style="font-size:14px">Evolução financeira</h3></div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">${trendCard('Faturamento anual','R$ 3,4M','up','+12% vs 2024')}${trendCard('Margem líquida','8,4%','up','+0,6pp')}${trendCard('Dívida/EBITDA','2,1x','down','melhorou 2,6→2,1')}${trendCard('Comprometimento','34%','flat','estável')}</div>
+  </div>
+  <div class="glass panel">
+    <div class="panel-h"><h3>Histórico de análises</h3><span class="eyebrow">perpétuo</span></div>
+    <div class="tl">
+      ${tlp('Jul/2026','Crédito Completa · R$ 150k','Em comitê','s-info','Y')}
+      ${tlp('Mar/2026','Empresarial 360 · R$ 120k','Aprovado','s-ok','Y')}
+      ${tlp('Out/2025','Essencial · R$ 60k','Aprovado','s-ok','X')}
+      ${tlp('Mai/2025','Empresarial 360 · R$ 200k','Negado · exposição','s-bad','Z')}
+      ${tlp('Nov/2024','Essencial · R$ 45k','Aprovado','s-ok','X')}
+    </div>
+  </div>
+</div>`;
+
 /* ===== ROUTER ===== */
 const content=document.getElementById('content'),ptitle=document.getElementById('ptitle');
+const EXTRA={clientePerfil:'Histórico do Cliente'};
 function go(id){
- const item=NAV.find(n=>n.id===id); if(!item)return;
+ const item=NAV.find(n=>n.id===id)||{id,t:EXTRA[id]||id};
  content.innerHTML=(S[id]||(()=>`<div class="glass panel"><h2>${item.t}</h2><p class="sub">Tela em construção no protótipo.</p></div>`))();
  ptitle.textContent=item.t;
  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.go===id));
  content.querySelectorAll('[data-ic]').forEach(e=>{if(!e.querySelector('svg'))e.insertAdjacentHTML('afterbegin',svg(e.dataset.ic))});
+ if(id==='simulador')simCalc();
  window.scrollTo(0,0); toggleDrawer(false);
 }
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){e.preventDefault();go(g.dataset.go)}});
