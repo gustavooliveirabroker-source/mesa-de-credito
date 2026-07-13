@@ -398,6 +398,33 @@ input[type=range]{accent-color:var(--emerald);height:6px;cursor:pointer}
 .dark input[type=range]{accent-color:var(--neon)}
 .dark .dark-mint{color:var(--mint)!important}
 
+/* ===== toast ===== */
+.toasts{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:120;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+.toast{pointer-events:auto;display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 16px;box-shadow:var(--shadow-elegant);font-size:13px;font-weight:500;animation:toastin .3s cubic-bezier(.22,1,.36,1) both;max-width:90vw}
+.dark .toast{background:#0a2722}
+.toast .ti{width:22px;height:22px;border-radius:99px;display:grid;place-items:center;flex:none;color:#fff}
+.toast .ti svg{width:13px;height:13px}
+.toast.ok .ti{background:var(--emerald)} .toast.info .ti{background:#3b82f6} .toast.warn .ti{background:#d9983c}
+@keyframes toastin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.toast.out{animation:toastout .3s ease forwards}
+@keyframes toastout{to{opacity:0;transform:translateY(14px)}}
+
+/* ===== button polish ===== */
+.btn-neon:active,.btn-primary:active,.btn-outline:active,.btn-em:active,.vopt:active,.iconbtn:active{transform:translateY(1px) scale(.99)}
+
+/* ===== white-label ===== */
+.brandgrid{display:grid;gap:12px;grid-template-columns:1fr}@media(min-width:640px){.brandgrid{grid-template-columns:repeat(4,1fr)}}
+.brandcard{border:1px solid var(--border);border-radius:14px;padding:15px;background:var(--card);cursor:pointer;transition:var(--tsmooth);text-align:left}
+.brandcard:hover{border-color:rgba(7,102,83,.4);transform:translateY(-2px);box-shadow:var(--shadow-elegant)}
+.brandcard.on{border-color:var(--emerald);box-shadow:var(--neon-glow)}
+.brandcard .bl{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:700;font-family:'IBM Plex Mono';font-size:15px;margin-bottom:10px}
+.brandcard b{font-size:13.5px}.brandcard .sw{display:flex;gap:5px;margin-top:8px}
+.brandcard .sw i{width:15px;height:15px;border-radius:5px;display:block}
+.wlprev{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--card)}
+.wlprev .wlbar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border)}
+.wlprev .wllogo{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:700;font-family:'IBM Plex Mono';font-size:13px}
+.wlprev .wlbody{padding:16px}
+
 /* drawer mobile */
 .scrim{position:fixed;inset:0;background:rgba(6,35,29,.6);backdrop-filter:blur(4px);z-index:40;display:none}
 .scrim.show{display:block}
@@ -413,7 +440,7 @@ input[type=range]{accent-color:var(--emerald);height:6px;cursor:pointer}
     <div class="saldo">
       <div class="top"><span class="eyebrow" data-ic="wallet">Carteira Mesa</span></div>
       <div class="val tab-num">R$ 12.480,00</div>
-      <button class="btn-neon" data-ic="plus">Recarregar</button>
+      <button class="btn-neon" data-ic="plus" data-toast="Recarga iniciada — gere o PIX para creditar a carteira">Recarregar</button>
     </div>
     <nav class="nav" id="nav"></nav>
     <div class="side-foot">
@@ -440,6 +467,7 @@ input[type=range]{accent-color:var(--emerald);height:6px;cursor:pointer}
 <div class="modal-scrim" id="modalScrim" onclick="if(event.target===this)closeModal()">
   <div class="modal"><div class="mh"><h3 id="modalTitle">—</h3><button class="mclose" onclick="closeModal()" data-ic="x"></button></div><div class="mb" id="modalBody"></div></div>
 </div>
+<div class="toasts" id="toasts"></div>
 
 <script>
 /* ===== lucide-style icons (stroke) ===== */
@@ -511,6 +539,7 @@ const NAV=[
  {id:'politicas',ic:'sliders',t:'Políticas de Crédito'},
  {id:'produtos',ic:'package',t:'Produtos'},
  {id:'integracoes',ic:'plug',t:'Integrações'},
+ {id:'whitelabel',ic:'sparkles',t:'Marca (White-label)'},
  {id:'usuarios',ic:'users',t:'Usuários & Alçadas'},
  {sec:'Gestão'},
  {id:'indicadores',ic:'chart',t:'Indicadores'},
@@ -1242,6 +1271,86 @@ S.clientePerfil=()=>`
     </div>
   </div>
 </div>`;
+
+/* ===== FASE 2 · toasts, white-label, comitê profissional ===== */
+function showToast(msg,type){const c=document.getElementById('toasts');if(!c)return;const ic=type==='warn'?'alert':type==='info'?'info':'check';const t=document.createElement('div');t.className='toast '+(type||'ok');t.innerHTML=`<span class="ti">${svg(ic)}</span>${msg}`;c.appendChild(t);setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),300)},2800)}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-toast]');if(t)showToast(t.getAttribute('data-toast'),'ok')});
+
+const BRANDS={
+ consulta:{name:'Consulta.ai',sub:'Mesa de Crédito',logo:'C',primary:'#076653',glow:'#0fa884',accent:'#e3ef26'},
+ valeverde:{name:'Vale Verde Cred',sub:'Crédito & Frota',logo:'V',primary:'#1f6f4a',glow:'#2ea36a',accent:'#bff05a'},
+ nexbank:{name:'NexBank',sub:'Financiamentos',logo:'N',primary:'#1b4dd1',glow:'#3d6ef0',accent:'#43e0ff'},
+ solaris:{name:'Solaris Cred',sub:'Análise de Risco',logo:'S',primary:'#b5451f',glow:'#e0733f',accent:'#ffcf6b'}
+};
+let curBrand='consulta';
+function applyBrand(id){curBrand=id;const b=BRANDS[id];const r=document.documentElement.style;
+ r.setProperty('--emerald',b.primary);r.setProperty('--primary',b.primary);r.setProperty('--primary-glow',b.glow);r.setProperty('--ring',b.primary);
+ r.setProperty('--gradient-primary',`linear-gradient(135deg,${b.primary} 0%,${b.glow} 100%)`);
+ r.setProperty('--neon',b.accent);r.setProperty('--neon-glow',`0 0 0 1px ${b.accent}99,0 0 20px ${b.accent}55`);
+ const bl=document.querySelector('aside.side .brand');if(bl){bl.querySelector('.logo').textContent=b.logo;bl.querySelector('b').textContent=b.name;bl.querySelector('small').textContent=b.sub}
+ document.querySelectorAll('.brandcard').forEach(c=>c.classList.toggle('on',c.dataset.brand===id));
+ showToast('Marca aplicada: '+b.name+' — o sistema inteiro recoloriu','ok');
+}
+
+S.whitelabel=()=>`
+<div class="page-h"><div><div class="eyebrow">${svg('sparkles')} White-label</div><h2>Marca do Cliente</h2><p class="sub">O sistema pode rodar com a marca do próprio cliente da Avante. Escolha uma marca e veja o sistema mudar ao vivo.</p></div></div>
+<div class="glass panel" style="margin-bottom:16px">
+  <div class="panel-h"><h3>Marcas configuradas</h3><span class="pill s-info">clique para aplicar</span></div>
+  <div class="brandgrid">${['consulta','valeverde','nexbank','solaris'].map(brandCard).join('')}</div>
+</div>
+<div class="grid c2">
+  <div class="glass panel">
+    <div class="panel-h"><h3>Personalização</h3></div>
+    <div class="field"><label>Nome exibido</label><input value="Vale Verde Cred"></div>
+    <div class="field"><label>Subdomínio</label><input value="valeverde.mesa.consulta.ai"></div>
+    <div class="frow"><div class="field"><label>Cor primária</label><input value="#1f6f4a"></div><div class="field"><label>Cor de destaque</label><input value="#bff05a"></div></div>
+    <div class="field"><label>Logo</label><div style="border:1px dashed var(--input);border-radius:10px;padding:16px;text-align:center;font-size:12px;color:var(--muted-foreground);display:flex;align-items:center;justify-content:center;gap:8px">${svg('download')} Arraste o logo (SVG/PNG) — mantém o padrão circular</div></div>
+    <button class="btn-neon" data-toast="Configuração de marca salva">${svg('check')} Salvar marca</button>
+  </div>
+  <div class="glass panel">
+    <div class="panel-h"><h3>Prévia ao vivo</h3><span class="eyebrow">reflete a marca ativa</span></div>
+    <div class="wlprev">
+      <div class="wlbar"><span class="wllogo" style="background:var(--gradient-primary)">✦</span><b>Painel do cliente</b><span class="btn-neon" style="margin-left:auto;padding:5px 12px;font-size:10px">Nova proposta</span></div>
+      <div class="wlbody"><div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">${mini('Aprovação','63%')}${mini('Exposição','R$ 18,7M')}</div><div class="bar" style="margin-top:12px"><span style="width:64%"></span></div><div style="margin-top:12px;display:flex;gap:8px">${riskBadge('Y')}${riskBadge('X')}</div></div>
+    </div>
+    <p class="sub" style="font-size:12px;margin-top:12px">O cliente final vê o sistema como se fosse dele. A Consulta.ai (e a Avante) ficam nos bastidores como plataforma.</p>
+  </div>
+</div>`;
+function brandCard(id){const b=BRANDS[id];return `<div class="brandcard ${curBrand===id?'on':''}" data-brand="${id}" onclick="applyBrand('${id}')"><div class="bl" style="background:linear-gradient(135deg,${b.primary},${b.glow})">${b.logo}</div><b>${b.name}</b><div class="sub" style="font-size:11px">${b.sub}</div><div class="sw"><i style="background:${b.primary}"></i><i style="background:${b.glow}"></i><i style="background:${b.accent}"></i></div></div>`}
+
+/* ---- COMITÊ profissional + relatório em modal ---- */
+S.comite=()=>`
+<div class="page-h"><div><div class="eyebrow">${svg('gavel')} Votação</div><h2>Comitê de Crédito</h2><p class="sub">5 propostas aguardam seu voto como aprovador N2. Clique num card para o relatório completo.</p></div></div>
+<div class="grid k2">
+  ${comCard2('Transportadora Vale Verde','12.345.678/0001-90','360.000','Y','1/2','R$ 90k · 6m · com condições','6h')}
+  ${comCard2('Construtora Alvorada','55.666.777/0001-88','890.000','Z','2/3','R$ 600k · 18m · garantia real','3h')}
+  ${comCard2('Distribuidora Norte','11.222.333/0001-44','185.000','Y','1/2','R$ 185k · aprovação integral','1d')}
+  ${comCard2('Frigorífico Serra Azul','77.888.999/0001-11','1.200.000','Y','2/3','R$ 900k · monitoramento mensal','5h')}
+</div>`;
+function comCard2(en,cn,val,rk,votes,reco,sla){const vp=votes.split('/');const pct=(+vp[0]/+vp[1]*100).toFixed(0);const rc=reco.replace(/'/g,'');return `<div class="glass glass-hover panel" style="cursor:pointer" onclick="comiteReport('${en}','${cn}','${val}','${rk}','${votes}','${rc}')">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div><b style="font-size:15px">${en}</b><div class="sub mono" style="font-size:11.5px;margin-top:2px">Exposição R$ ${val}</div></div>${riskBadge(rk)}</div>
+  <div style="background:var(--muted);border-radius:10px;padding:10px 12px;margin:12px 0;font-size:12.5px"><span class="eyebrow" style="font-size:9px">Recomendação do sistema</span><div style="margin-top:4px;font-weight:600">${reco}</div></div>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="bar" style="flex:1"><span style="width:${pct}%"></span></div><span class="sub mono" style="font-size:11px">${votes} votos</span></div>
+  <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill s-warn">${svg('clock')} SLA ${sla}</span><div style="display:flex;gap:6px"><button class="vopt ok" style="padding:6px 12px" onclick="event.stopPropagation();quickApprove('${en}')">${svg('check')} Aprovar</button><button class="btn-outline" style="padding:6px 12px" onclick="event.stopPropagation();go('detalhe')">Analisar</button></div></div>
+</div>`}
+function quickApprove(en){showToast('Voto de aprovação registrado · '+en,'ok')}
+function comiteReport(en,cn,val,rk,votes,reco){const sc=rk==='Z'?612:rk==='Y'?742:805;const body=`
+  <div class="glass-strong strip" style="margin-bottom:14px;padding:14px">
+    ${gaugeEl(sc,rk)}
+    <div class="sv"><div class="eyebrow">Faixa</div><div style="margin-top:6px">${riskBadge(rk)}</div></div>
+    <div class="sv"><div class="eyebrow">Exposição</div><div class="n" style="font-family:'IBM Plex Mono';font-size:18px;font-weight:700">R$ ${val}</div></div>
+    <div class="sv"><div class="eyebrow">Votos</div><div class="n" style="font-family:'IBM Plex Mono';font-size:18px;font-weight:700">${votes}</div></div>
+  </div>
+  <div style="font-size:12.5px"><b>${en}</b><br><span class="mono muted">${cn}</span></div>
+  <div style="margin:12px 0;padding:12px;background:var(--muted);border-radius:10px;font-size:12.5px"><span class="eyebrow" style="font-size:9px">Recomendação do sistema</span><div style="margin-top:4px;font-weight:600">${reco}</div></div>
+  <div class="eyebrow" style="margin:14px 0 8px">Consultas & análise</div>
+  <div class="flist"><div><span class="dot-ok"></span><div>Cadastral ATIVA · score compatível com a faixa</div></div><div><span class="dot-ok"></span><div>Análise financeira: receita estável, margem positiva</div></div><div><span class="dot-bad"></span><div>Exposição do grupo e comprometimento pedem atenção</div></div></div>
+  <div class="eyebrow" style="margin:14px 0 8px">Votos anteriores</div>
+  <div class="voter"><span class="ini">AL</span><div style="flex:1"><b style="font-size:13px">Ana Lima · N1</b><div class="sub" style="font-size:11.5px">Aprovou com condições · "de acordo com a redução e avalista"</div></div><span class="pill s-ok">${svg('check')} Aprovou</span></div>
+  <div class="voter"><span class="ini" style="background:var(--muted);color:var(--muted-foreground)">GO</span><div style="flex:1"><b style="font-size:13px">Gustavo O. · N2</b><div class="sub" style="font-size:11.5px">Seu voto pendente</div></div><span class="pill s-warn">${svg('clock')} Pendente</span></div>
+  <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><button class="btn-neon" onclick="closeModal();quickApprove('${en}')">${svg('check')} Aprovar</button><button class="btn-outline" onclick="closeModal();go('detalhe')">Abrir análise completa</button><button class="btn-outline" onclick="explainWhy()">${svg('info')} Por que essa decisão?</button></div>`;
+  openModal('Relatório do comitê · '+en,body);
+}
 
 /* ===== ROUTER ===== */
 const content=document.getElementById('content'),ptitle=document.getElementById('ptitle');
