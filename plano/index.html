@@ -117,7 +117,8 @@ footer{padding:30px 0 60px;color:var(--mutfg);font-size:12px;font-family:var(--m
   <h1>Construir a Mesa de Crédito <span class="g">dentro do Consulta.ai</span></h1>
   <p class="hero p">Módulo aditivo, multi-tenant e white-label-ready desde o primeiro commit — reaproveitando auth, carteira, fornecedores de dados, PDF e UI que já rodam em produção. Nada de reconstruir infra.</p>
   <div class="pillrow">
-    <span class="pill on">13 tabelas mesa_* (Fase 1)</span>
+    <span class="pill on">módulo privado · acesso restrito</span>
+    <span class="pill on">14 tabelas mesa_* (Fase 1)</span>
     <span class="pill on">migration aditiva</span>
     <span class="pill on">branch feat/mesa-credito</span>
     <span class="pill">TanStack + Supabase + Cloudflare</span>
@@ -139,6 +140,18 @@ footer{padding:30px 0 60px;color:var(--mutfg);font-size:12px;font-family:var(--m
   </div>
 </section>
 
+<!-- ACESSO -->
+<section>
+  <div class="eyebrow">01½ · Módulo privado</div>
+  <h2 class="stitle">Acesso restrito — nem todo usuário vê a Mesa</h2>
+  <p class="ssub">A Mesa é um módulo à parte, contratado. O acesso passa por dois gates independentes; quem não tem sequer enxerga o menu.</p>
+  <div class="grid g2">
+    <div class="card"><h3><span class="tag t-new">GATE 1</span> Por empresa</h3><p><code>mesa_orgs</code> marca quais contas contrataram a Mesa (plano + status). Sem registro ativo, a área <code>/app/mesa</code> não existe para aquela conta. Habilitado pelo admin da plataforma.</p></div>
+    <div class="card"><h3><span class="tag t-new">GATE 2</span> Por usuário</h3><p>Dentro da org habilitada, só quem está em <code>mesa_members</code> opera — com seu papel (analista, aprovador N1–N3, auditor…). Os demais não veem nada.</p></div>
+  </div>
+  <div class="note" style="margin-top:14px;border-left-color:var(--emerald)"><b>No app:</b> o <code>NavItem</code> de <code>/app/mesa</code> e o guard de rota checam <code>mesa_has_access(client_id)</code> = (org habilitada) <b>E</b> (usuário membro). Menu condicional + guard de rota + verificação nas server functions — três camadas.</div>
+</section>
+
 <!-- MODELO DE DADOS -->
 <section>
   <div class="eyebrow">02 · Modelo de dados</div>
@@ -146,6 +159,7 @@ footer{padding:30px 0 60px;color:var(--mutfg);font-size:12px;font-family:var(--m
   <p class="ssub">Todas com <code>client_id</code> (a empresa que opera a Mesa) + <code>tenant_wl_id</code> nullable, isoladas por RLS via <code>mesa_is_member()</code>. O subject perpetua: 1 empresa analisada → N propostas → N análises.</p>
   <div class="erd">
     <div class="grp"><div class="gl">Governança & config (por org)</div><div class="tabs">
+      <div class="tb core"><b>mesa_orgs</b><small>habilitação (privado)</small></div>
       <div class="tb core"><b>mesa_members</b><small>usuários + alçadas</small></div>
       <div class="tb core"><b>mesa_stages</b><small>Kanban customizável</small></div>
       <div class="tb core"><b>mesa_risk_bands</b><small>faixas → alçada</small></div>
@@ -185,6 +199,7 @@ footer{padding:30px 0 60px;color:var(--mutfg);font-size:12px;font-family:var(--m
   <div class="tbl-wrap"><table class="tbl">
     <thead><tr><th>Tabela</th><th>Propósito</th><th>Campos-chave</th></tr></thead>
     <tbody>
+      <tr><td>mesa_orgs</td><td>Habilitação da Mesa por empresa (módulo privado)</td><td>active, plan, status</td></tr>
       <tr><td>mesa_members</td><td>Usuários da org e seus papéis/alçadas</td><td>role, alcada_limit_cents</td></tr>
       <tr><td>mesa_stages</td><td>Etapas do Kanban (customizáveis, com SLA)</td><td>key, ord, phase, sla_hours</td></tr>
       <tr><td>mesa_risk_bands</td><td>Faixas X/Y/Z/B e quem vota em cada</td><td>levels[], quorum, max_cents</td></tr>
