@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mesa de Crédito · Schema & Plano de Integração</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#06231d;--emerald:#076653;--emerald2:#0a8a6f;--neon:#e3ef26;--clay:#c97e4e;
+  --bg:#f5f7f2;--fg:#0c1f1a;--card:#fff;--muted:#eef1ee;--mutfg:#4a5d54;--line:rgba(12,31,26,.10);
+  --amber:#b6702a;--red:#c43d3d;--blue:#2f74d0;--violet:#8256d6;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;--sans:'IBM Plex Sans',system-ui,sans-serif;
+  --shadow:0 1px 3px rgba(12,31,26,.06),0 14px 34px -14px rgba(12,31,26,.16);
+  --grad:linear-gradient(135deg,var(--emerald),var(--emerald2));
+}
+@media(prefers-color-scheme:dark){:root{--bg:#04181a;--fg:#eafff5;--card:#0b2019;--muted:rgba(255,255,255,.05);--mutfg:#a0b8aa;--line:rgba(255,255,255,.08);--amber:#f0b56a;--red:#f08a8a;--blue:#7ab6ff;--violet:#c3a8ff}}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--sans);background:
+  radial-gradient(60% 50% at 0% 0%,rgba(7,102,83,.10),transparent 60%),
+  radial-gradient(45% 40% at 100% 0%,rgba(227,239,38,.10),transparent 62%),var(--bg);
+  color:var(--fg);line-height:1.55;-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3,h4{letter-spacing:-.02em;font-weight:700;margin:0}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--emerald)}
+@media(prefers-color-scheme:dark){.eyebrow{color:var(--neon)}}
+.sub{color:var(--mutfg)}
+a{color:var(--emerald)}
+
+header.hero{padding:60px 0 30px}
+.logo{display:inline-flex;align-items:center;gap:11px;margin-bottom:20px}
+.logo .m{width:34px;height:34px;border-radius:10px;background:var(--grad);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:16px}
+@media(prefers-color-scheme:dark){.logo .m{background:var(--neon);color:var(--forest)}}
+.logo b{font-size:15px}.logo small{display:block;font-size:10px;color:var(--mutfg);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.05;text-wrap:balance}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(prefers-color-scheme:dark){h1 .g{background:linear-gradient(135deg,var(--neon),#9fe0a0);-webkit-background-clip:text;background-clip:text}}
+.hero p{font-size:17px;color:var(--mutfg);max-width:680px;margin:14px 0 0}
+.pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pill{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--mutfg)}
+.pill.on{background:rgba(7,102,83,.12);color:var(--emerald);border-color:transparent}
+@media(prefers-color-scheme:dark){.pill.on{color:var(--neon);background:rgba(227,239,38,.12)}}
+
+section{padding:34px 0;border-top:1px solid var(--line)}
+.stitle{font-size:24px;margin:6px 0 6px}
+.ssub{color:var(--mutfg);max-width:720px;margin-bottom:22px}
+
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr}@media(min-width:720px){.g2{grid-template-columns:1fr 1fr}}
+.g3{grid-template-columns:1fr}@media(min-width:720px){.g3{grid-template-columns:repeat(3,1fr)}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.card h3{font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.card p{margin:0;font-size:13.5px;color:var(--mutfg)}
+.tag{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:6px;font-weight:600}
+.t-reuse{background:rgba(7,102,83,.13);color:var(--emerald)}@media(prefers-color-scheme:dark){.t-reuse{color:var(--neon)}}
+.t-new{background:rgba(130,86,214,.14);color:var(--violet)}
+code{font-family:var(--mono);font-size:12px;background:var(--muted);padding:2px 6px;border-radius:5px;color:var(--emerald)}
+@media(prefers-color-scheme:dark){code{color:var(--neon)}}
+
+/* ERD */
+.erd{display:grid;gap:16px}
+.erd .grp{border:1px dashed var(--line);border-radius:16px;padding:14px}
+.erd .gl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mutfg);margin-bottom:10px}
+.erd .tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tb{border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--card);font-size:12.5px;min-width:150px}
+.tb b{font-family:var(--mono);font-size:12px;display:block}
+.tb small{font-size:10.5px;color:var(--mutfg)}
+.tb.core{border-color:var(--emerald)}
+.tb.reuse{background:rgba(7,102,83,.06);border-style:dashed}
+.rel{font-size:12px;color:var(--mutfg);margin-top:12px;font-family:var(--mono)}
+
+/* table catalog */
+.tbl{width:100%;border-collapse:collapse;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tbl th,.tbl td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--mutfg);background:var(--muted)}
+.tbl td:first-child{font-family:var(--mono);font-weight:600;white-space:nowrap;color:var(--emerald)}
+@media(prefers-color-scheme:dark){.tbl td:first-child{color:var(--neon)}}
+.tbl tr:last-child td{border-bottom:none}
+.tbl-wrap{overflow-x:auto}
+
+/* pipeline */
+.pipe{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.pstep{flex:none;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.pstep .n{font-family:var(--mono);font-size:10px;color:var(--mutfg)}
+.pstep .t{font-size:13px;font-weight:600;margin-top:3px}
+.pstep code{font-size:10.5px;background:none;padding:0}
+
+/* phases */
+.phase{border-left:2px solid var(--line);padding:0 0 22px 22px;position:relative}
+.phase::before{content:"";position:absolute;left:-7px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--emerald)}
+@media(prefers-color-scheme:dark){.phase::before{background:var(--neon)}}
+.phase:last-child{padding-bottom:0}
+.phase .pf{font-family:var(--mono);font-size:11px;color:var(--emerald);letter-spacing:.06em}
+@media(prefers-color-scheme:dark){.phase .pf{color:var(--neon)}}
+.phase h4{font-size:16px;margin:3px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:11.5px;padding:4px 10px;border-radius:8px;background:var(--muted);color:var(--mutfg)}
+.phase.now .pf{color:var(--clay)}
+.phase.now::before{background:var(--clay);box-shadow:0 0 0 4px rgba(201,126,78,.18)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:12px;padding:14px 16px;background:var(--card);font-size:13.5px;margin-bottom:12px}
+.note b{color:var(--fg)}
+.cta{background:var(--grad);color:#fff;border-radius:18px;padding:26px;text-align:center}
+@media(prefers-color-scheme:dark){.cta{background:linear-gradient(135deg,#0a3a2e,#06231d);border:1px solid var(--line)}}
+.cta h3{font-size:22px;color:#fff}.cta p{color:rgba(255,255,255,.85);margin:8px 0 0;font-size:15px}
+footer{padding:30px 0 60px;color:var(--mutfg);font-size:12px;font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="logo"><div class="m">C</div><div><b>Consulta.ai</b><small>Mesa de Crédito</small></div></div>
+  <div class="eyebrow">Schema &amp; plano de integração · v1 para aprovação</div>
+  <h1>Construir a Mesa de Crédito <span class="g">dentro do Consulta.ai</span></h1>
+  <p class="hero p">Módulo aditivo, multi-tenant e white-label-ready desde o primeiro commit — reaproveitando auth, carteira, fornecedores de dados, PDF e UI que já rodam em produção. Nada de reconstruir infra.</p>
+  <div class="pillrow">
+    <span class="pill on">13 tabelas mesa_* (Fase 1)</span>
+    <span class="pill on">migration aditiva</span>
+    <span class="pill on">branch feat/mesa-credito</span>
+    <span class="pill">TanStack + Supabase + Cloudflare</span>
+  </div>
+</header>
+
+<!-- COMO ENCAIXA -->
+<section>
+  <div class="eyebrow">01 · Reaproveitamento</div>
+  <h2 class="stitle">O que já existe e a Mesa herda</h2>
+  <p class="ssub">A leitura do repo <code>cashin-cashout-hub</code> confirmou que a fundação está pronta. Verde = reaproveitado; roxo = novo da Mesa.</p>
+  <div class="grid g3">
+    <div class="card"><h3><span class="tag t-reuse">REUSA</span> Auth &amp; papéis</h3><p><code>user_roles</code> + <code>useProfile()</code> + guards de rota. A Mesa adiciona <code>mesa_members</code> com papéis próprios (analista, aprovador N1–N3…).</p></div>
+    <div class="card"><h3><span class="tag t-reuse">REUSA</span> Carteira &amp; cobrança</h3><p><code>debit_wallet_atomic()</code> — débito atômico idempotente por <code>ref_id</code>. A análise é cobrada sem risco de duplicidade.</p></div>
+    <div class="card"><h3><span class="tag t-reuse">REUSA</span> Fornecedores de dados</h3><p><code>queries</code> + <code>query_modules</code> (CPF/CNPJ, score, SCR, jurídico…). <code>mesa_consultations</code> apenas referencia a consulta executada.</p></div>
+    <div class="card"><h3><span class="tag t-reuse">REUSA</span> White-label</h3><p><code>white_label_configs</code> + <code>tenant_wl_id</code> + <code>wl_owner_config_id()</code>. A Mesa nasce com a coluna — o "sistema com a marca do cliente" vem de graça.</p></div>
+    <div class="card"><h3><span class="tag t-reuse">REUSA</span> UI &amp; PDF</h3><p><code>app-shell</code>, <code>responsive-table</code>, <code>ui/*</code> (shadcn) e o renderer <code>pdf-lib</code> do parecer. Mesma identidade.</p></div>
+    <div class="card"><h3><span class="tag t-new">NOVO</span> Motor &amp; esteira</h3><p>Política configurável, Kanban, faixas X/Y/Z, comitê/alçadas, agente financeiro e histórico do subject — as tabelas <code>mesa_*</code>.</p></div>
+  </div>
+</section>
+
+<!-- MODELO DE DADOS -->
+<section>
+  <div class="eyebrow">02 · Modelo de dados</div>
+  <h2 class="stitle">13 tabelas, agrupadas por função</h2>
+  <p class="ssub">Todas com <code>client_id</code> (a empresa que opera a Mesa) + <code>tenant_wl_id</code> nullable, isoladas por RLS via <code>mesa_is_member()</code>. O subject perpetua: 1 empresa analisada → N propostas → N análises.</p>
+  <div class="erd">
+    <div class="grp"><div class="gl">Governança & config (por org)</div><div class="tabs">
+      <div class="tb core"><b>mesa_members</b><small>usuários + alçadas</small></div>
+      <div class="tb core"><b>mesa_stages</b><small>Kanban customizável</small></div>
+      <div class="tb core"><b>mesa_risk_bands</b><small>faixas → alçada</small></div>
+      <div class="tb core"><b>mesa_policies</b><small>política de crédito</small></div>
+      <div class="tb core"><b>mesa_policy_rules</b><small>regras (bloq/alerta/exceção)</small></div>
+    </div></div>
+    <div class="grp"><div class="gl">Cliente analisado (perpétuo)</div><div class="tabs">
+      <div class="tb core"><b>mesa_subjects</b><small>CPF/CNPJ analisado</small></div>
+      <div class="tb core"><b>mesa_economic_groups</b><small>grupo econômico</small></div>
+      <div class="tb"><b>mesa_group_members</b><small>vínculos</small></div>
+      <div class="tb core"><b>mesa_financial_snapshots</b><small>evolução financeira</small></div>
+    </div></div>
+    <div class="grp"><div class="gl">Esteira & decisão</div><div class="tabs">
+      <div class="tb core"><b>mesa_proposals</b><small>proposta comercial</small></div>
+      <div class="tb core"><b>mesa_analyses</b><small>parecer + score + PDF</small></div>
+      <div class="tb core"><b>mesa_consultations</b><small>→ queries (fornecedor)</small></div>
+      <div class="tb core"><b>mesa_documents</b><small>DRE, balanço, extratos…</small></div>
+      <div class="tb core"><b>mesa_committee_votes</b><small>votos (imutável)</small></div>
+      <div class="tb core"><b>mesa_decisions</b><small>decisão consolidada</small></div>
+      <div class="tb core"><b>mesa_audit_log</b><small>trilha</small></div>
+    </div></div>
+    <div class="grp"><div class="gl">Reaproveitadas do Consulta.ai (sem alterar)</div><div class="tabs">
+      <div class="tb reuse"><b>clients</b><small>= org da Mesa</small></div>
+      <div class="tb reuse"><b>wallets</b><small>cobrança</small></div>
+      <div class="tb reuse"><b>queries</b><small>consultas de dados</small></div>
+      <div class="tb reuse"><b>white_label_configs</b><small>tenant/marca</small></div>
+      <div class="tb reuse"><b>auth.users</b><small>login</small></div>
+    </div></div>
+    <div class="rel">subjects 1─∞ proposals · proposals 1─∞ analyses · analyses 1─∞ consultations → queries · proposals 1─∞ votes → decisions</div>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section>
+  <div class="eyebrow">03 · Catálogo</div>
+  <h2 class="stitle">O que cada tabela guarda</h2>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Tabela</th><th>Propósito</th><th>Campos-chave</th></tr></thead>
+    <tbody>
+      <tr><td>mesa_members</td><td>Usuários da org e seus papéis/alçadas</td><td>role, alcada_limit_cents</td></tr>
+      <tr><td>mesa_stages</td><td>Etapas do Kanban (customizáveis, com SLA)</td><td>key, ord, phase, sla_hours</td></tr>
+      <tr><td>mesa_risk_bands</td><td>Faixas X/Y/Z/B e quem vota em cada</td><td>levels[], quorum, max_cents</td></tr>
+      <tr><td>mesa_policies / _rules</td><td>Motor de política sem código</td><td>criterio, operador, valor, resultado</td></tr>
+      <tr><td>mesa_subjects</td><td>Empresa/pessoa analisada — perpétuo</td><td>doc_number, kind, cnae (unique por org)</td></tr>
+      <tr><td>mesa_proposals</td><td>Proposta comercial + exposição calculada</td><td>valor, prazo, stage_id, risk_band, exposure</td></tr>
+      <tr><td>mesa_analyses</td><td>Parecer, score próprio, recomendação, PDF</td><td>score, financials, recommendation, cost_cents</td></tr>
+      <tr><td>mesa_financial_snapshots</td><td>Fotos financeiras p/ evolução do subject</td><td>ref_date, indicators</td></tr>
+      <tr><td>mesa_consultations</td><td>Retorno por fonte, ligado à query real</td><td>source, status, query_id</td></tr>
+      <tr><td>mesa_documents</td><td>Docs do cliente (Supabase Storage)</td><td>doc_type, storage_path, status</td></tr>
+      <tr><td>mesa_committee_votes</td><td>Voto individual + justificativa (imutável)</td><td>decision, valor/prazo aprovado, snapshot</td></tr>
+      <tr><td>mesa_decisions</td><td>Decisão consolidada após quórum</td><td>outcome, limite, taxa_am, condicoes</td></tr>
+      <tr><td>mesa_audit_log</td><td>Trilha de tudo (LGPD/governança)</td><td>action, entity, snapshot</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- FLUXO -->
+<section>
+  <div class="eyebrow">04 · Fluxo técnico</div>
+  <h2 class="stitle">Uma proposta ponta-a-ponta</h2>
+  <p class="ssub">Tudo via <code>createServerFn().middleware([requireSupabaseAuth])</code> em <code>src/lib/mesa.functions.ts</code>, gravando com <code>supabaseAdmin</code> e consumido nas rotas com <code>useServerFn</code> + React Query.</p>
+  <div class="pipe">
+    <div class="pstep"><div class="n">01</div><div class="t">createProposal</div><code>mesa_proposals</code></div>
+    <div class="pstep"><div class="n">02</div><div class="t">runConsultations</div><code>→ queries</code></div>
+    <div class="pstep"><div class="n">03</div><div class="t">runPolicy</div><code>mesa.policy.ts</code></div>
+    <div class="pstep"><div class="n">04</div><div class="t">buildAnalysis + debit</div><code>debit_wallet_atomic</code></div>
+    <div class="pstep"><div class="n">05</div><div class="t">castVote</div><code>mesa_committee_votes</code></div>
+    <div class="pstep"><div class="n">06</div><div class="t">consolidate</div><code>mesa_decisions</code></div>
+    <div class="pstep"><div class="n">07</div><div class="t">renderPdf</div><code>pdf-lib</code></div>
+  </div>
+</section>
+
+<!-- FASES -->
+<section>
+  <div class="eyebrow">05 · Roadmap de construção</div>
+  <h2 class="stitle">Da fundação ao produto</h2>
+  <div style="max-width:780px;margin-top:20px">
+    <div class="phase now">
+      <div class="pf">FASE 0 · agora (este entregável)</div>
+      <h4>Schema + plano aprovados</h4>
+      <div class="chips"><span class="chip">migration mesa_fase1_core.sql</span><span class="chip">branch feat/mesa-credito</span><span class="chip">aprovação do modelo</span></div>
+    </div>
+    <div class="phase">
+      <div class="pf">FASE 1 · MVP</div>
+      <h4>Esteira de decisão fim-a-fim</h4>
+      <div class="chips"><span class="chip">mesa.functions.ts</span><span class="chip">motor de política</span><span class="chip">rotas /app/mesa</span><span class="chip">Kanban + proposta + comitê</span><span class="chip">cobrança por consumo</span><span class="chip">parecer PDF</span></div>
+    </div>
+    <div class="phase">
+      <div class="pf">FASE 2</div>
+      <h4>Inteligência financeira</h4>
+      <div class="chips"><span class="chip">upload DRE/balanço/extratos</span><span class="chip">extração IA</span><span class="chip">snapshots + gráficos</span><span class="chip">simulador</span><span class="chip">histórico do subject</span></div>
+    </div>
+    <div class="phase">
+      <div class="pf">FASE 3</div>
+      <h4>Carteira & monitoramento</h4>
+      <div class="chips"><span class="chip">operações aprovadas</span><span class="chip">watchlist</span><span class="chip">eventos + alertas WhatsApp</span><span class="chip">grupos econômicos</span></div>
+    </div>
+    <div class="phase">
+      <div class="pf">FASE 4</div>
+      <h4>Integrações avançadas</h4>
+      <div class="chips"><span class="chip">Open Finance</span><span class="chip">SCR parceiro</span><span class="chip">ERP/CRM</span><span class="chip">API externa</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DECISÕES -->
+<section>
+  <div class="eyebrow">06 · Decisões & riscos</div>
+  <h2 class="stitle">Pontos que precisam do seu OK</h2>
+  <div class="note"><b>Lovable no main.</b> A Lovable dá <code>git add -A</code> no <code>main</code> sozinho. Solução: toda a Mesa vive na branch <code>feat/mesa-credito</code>, migration aditiva (não toca tabelas existentes), merge coordenado quando você decidir. Evita conflito com o editor web.</div>
+  <div class="note"><b>Como aplicar a migration.</b> O Supabase é gerido pela Lovable. Precisamos definir: (a) colar o SQL no SQL Editor do Supabase, ou (b) deixar a Lovable aplicar ao commitar o arquivo em <code>supabase/migrations/</code>. Recomendo (a) num ambiente de teste primeiro.</div>
+  <div class="note"><b>Cobrança.</b> Cada análise debita a carteira do cliente via <code>debit_wallet_atomic('client', client_id, custo, 'query_debit', 'mesa_analise', analysis_id)</code> — idempotente. Preço dos produtos (Essencial/Empresarial/Completa) entra como itens de tabela de preço.</div>
+</section>
+
+<section style="border:none">
+  <div class="cta">
+    <h3>Próximo passo</h3>
+    <p>Se o schema e o plano estiverem de acordo, eu crio a branch <code style="background:rgba(255,255,255,.15);color:#fff">feat/mesa-credito</code>, coloco a migration e começo a Fase 1 (MVP) — proposta → política → comitê fim-a-fim.</p>
+  </div>
+</section>
+
+<footer>Consulta.ai · Mesa de Crédito — documento de planejamento técnico · gerado a partir da leitura real do repo cashin-cashout-hub</footer>
+
+</div>
+</body>
+</html>
